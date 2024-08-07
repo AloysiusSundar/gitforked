@@ -1,0 +1,312 @@
+body {
+  background: $brand-color;
+  color: $text-color;
+  font-family: $font-family;
+  font-size: 1.3125em;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 3em;
+  margin: .5em auto;
+}
+
+h2 {
+  font-size: 2em;
+  margin: 1em auto;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin: 1.3333em auto;
+  text-align: center;
+}
+
+h4 {
+  font-size: 1.25em;
+  font-style: italic;
+  margin: 1.875em auto;
+  text-align: center;
+}
+
+h5 {
+  font-size: 1em;
+  font-style: italic;
+  margin: 2em auto;
+  text-align: center;
+}
+
+h6 {
+  font-size: .875em;
+  font-style: italic;
+  margin: 2.25em auto;
+  text-align: center;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+a {
+  color: $text-color;
+}
+
+a:focus {
+  outline: 1px dashed $text-color;
+}
+
+blockquote {
+  margin: 2em auto;
+  opacity: .8;
+  > * {
+    padding: 0 3em;
+  }
+}
+
+blockquote.epigraph {
+  font-style: italic;
+}
+
+small {
+  font-size: .75em;
+}
+
+p > cite {
+  display: block;
+  text-align: right;
+}
+
+hr {
+  border: 0;
+  height: 0;
+  @include divider;
+  margin: 4em 0;
+}
+
+img {
+  display: flex;
+  max-width: 100%;
+  height: auto;
+  margin: 2em auto;
+}
+
+figure img {
+  margin: 2em auto 1em;
+}
+
+figcaption {
+  font-size: .875em;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 2em;
+  opacity: .7;
+}
+
+.divided::after {
+  content: "";
+  @include divider;
+}
+
+.home {
+  max-width: 24em;
+  margin: auto;
+  padding: 4em 1em;
+}
+
+.content-title {
+  font-size: 2em;
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+.post-date {
+  color: $muted-text-color;
+  display: block;
+  font-size: .825em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  .post-link & {
+    padding: .5em 0;
+  }
+}
+
+.site-credits {
+  margin: 0 auto 2em;
+  padding: 0 2em;
+  text-align: center;
+}
+
+.skip-navigation {
+  background: $brand-color;
+  border: 1px dashed transparent;
+  display: block;
+  font-size: .875em;
+  font-weight: 700;
+  margin-top: -2.625rem;
+  padding: .5rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  &:hover,
+  &:focus {
+    background: lighten($brand-color, 2.5%);
+    border-color: $text-color;
+    margin-top: 0;
+  }
+}
+
+/* Media Section */
+.media-section {
+  margin-top: 4em;
+  text-align: center;
+}
+
+/* New Sections */
+.repeat-reading-sections {
+  margin: 40px auto;
+  max-width: 600px; /* Centers the container */
+  text-align: center;
+}
+
+.section-item {
+  margin-bottom: 40px;
+}
+
+.spotify-embed {
+  width: 100%;
+  max-width: 800px; /* Ensure it doesn't exceed a certain size */
+  margin: 0 auto;
+  transition: transform 0.5s ease-in-out; /* Smooth transition */
+}
+
+.spotify-embed:hover {
+  transform: scale(1.05); /* Enlarge slightly on hover */
+}
+
+.spotify-embed iframe {
+  width: 100%;
+  height: 352px;
+  border-radius: 12px;
+}
+
+.repeat-reading-sections h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.repeat-reading-sections p {
+  font-size: 20px;
+}
+
+.repeat-reading-sections a {
+  color: $text-color;
+  text-decoration: underline;
+}
+
+.repeat-reading-sections a:hover {
+  text-decoration: none;
+}
+
+.section-item p a {
+  font-size: 20px; /* Initial font size */
+  transition: font-size 0.3s ease; /* Smooth transition for font size change */
+}
+
+.section-item p a:hover {
+  font-size: 24px; /* Increased font size on hover */
+  text-decoration: underline; /* Optional: Underline text on hover for emphasis */
+}
+
+/* Post link hover effect within .post-list */
+.post-list a {
+  font-size: 18px; /* Initial font size */
+  transition: font-size 0.3s ease; /* Smooth transition for font size change */
+}
+
+.post-list a:hover {
+  font-size: 20px; /* Increased font size on hover */
+  text-decoration: underline; /* Optional: Underline text on hover for emphasis */
+}
+
+.site-navigation li {
+  display: inline-block;
+  margin: 0 1em; /* Adjust as needed */
+}
+
+.site-navigation li a {
+  font-size: 18px; /* Initial font size */
+  transition: font-size 0.3s ease, text-decoration 0.3s ease; /* Smooth transition for font size and text-decoration */
+}
+
+.site-navigation li a:hover {
+  font-size: 24px; /* Increased font size on hover */
+  text-decoration: underline; /* Underline text on hover */
+}
+
+.pagination-next.btn {
+  font-size: 18px; /* Initial font size */
+  transition: font-size 0.3s ease, text-decoration 0.3s ease; /* Smooth transition for font size and text-decoration */
+}
+
+.pagination-next.btn:hover {
+  font-size: 20px; /* Increased font size on hover */
+   /* Underline text on hover */
+}
+
+
+.site-masthead h1 {
+  font-size: 3em;
+  margin: 1em 0 0; /* Adjust margin as needed */
+  padding: 0 2rem;
+  position: relative; /* Required for positioning the pseudo-element */
+  display: inline-block;
+}
+
+.site-masthead h1::after {
+  content: ">";
+  position: absolute;
+  right: -0.4em; /* Adjust this value to position it correctly */
+  top: 50%; /* Vertically center the blinking ">" */
+  transform: translateY(-55%); /* Adjust vertical alignment */
+  font-size: 1.3em; /* Adjust size if needed */
+  animation: blink 2.0s infinite; /* Adjusted animation duration */
+  color: #0b0404; /* Ensure it has a visible color */
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1; /* Adjust for a smoother blink effect */
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.pen-image {
+  position: absolute;
+  top: -100%; /* Move it up slightly */
+  right: -45%; /* Adjust as needed to position the pen closer or further away */
+  width: 280px; /* Adjust size as needed */
+  height: auto;
+  transform: translateY(30%) rotate(-15deg); /* Tilt the pen and control the vertical overlap */
+  z-index: 1; /* Ensure it appears above other elements */
+  transition: transform 0.5s ease; 
+  transition: transform 1.5s ease-out; /* Smooth transition */
+}
+
+@media (max-width: 768px) {
+  .pen-image {
+    top: -5%; /* Move it up slightly on smaller screens */
+    width: 60px; /* Adjust size for smaller screens */
+    right: -5%; /* Adjust positioning for smaller screens */
+    transform: translateY(20%) rotate(-15deg); /* Tilt the pen and control the vertical overlap */
+  }
+}

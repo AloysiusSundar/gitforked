@@ -1,0 +1,156 @@
+---
+layout: default
+---
+
+{% if site.data.menu and site.paginate and site.paginate_path and paginator.page > 1 %}
+  {% include menu.html %}
+{% elsif site.paginate and site.paginate_path and paginator.page > 1 %}
+  {% include back-link.html %}
+{% else %}
+  <header class="site-masthead">
+    {% include menu.html %}
+    {% if site.title %}
+      <h1>
+        {{ site.title }} 
+        <img src="{{ '/assets/images/pen.png' | relative_url }}" alt="Pen Image" class="pen-image">
+      </h1>
+    {% endif %}
+    {% if site.title %}
+      <h2>
+        {{ site.description }}
+      </h2>
+    {% endif %}
+  </header>
+{% endif %}
+
+<main class="home" id="main" role="main" aria-label="Content">
+
+  <h1 class="content-title divided">
+    {% if site.paginate and site.paginate_path and paginator.page > 1 %}
+      Page {{ paginator.page }}
+    {% else %}
+      Contents
+    {% endif %}
+    
+  </h1>
+
+  
+
+  <!-- Posts List -->
+  {% if site.paginate and site.paginate_path %}
+    
+    <ul class="post-list">
+      {% for post in paginator.posts %}
+        {% include post-list-item.html %}
+      {% endfor %}
+    </ul>
+
+    {% if paginator.total_pages > 1 %}
+
+      <div class="post-pagination">
+        {% if paginator.next_page %}
+          <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="pagination-next btn">&lang;&nbsp;Older</a>
+        {% else %}
+          <span>&nbsp;</span>
+        {% endif %}
+        <span class="pagination-number">{{ paginator.page }} of {{ paginator.total_pages }}</span>
+        {% if paginator.previous_page %}
+          <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="pagination-previous btn">Newer&nbsp;&rang;</a>
+        {% else %}
+          <span>&nbsp;</span>
+        {% endif %}
+      </div>
+
+    {% endif %}
+
+  {% else %}
+
+    <ul class="post-list">
+      {% for post in site.posts %}
+        {% include post-list-item.html %}
+      {% endfor %}
+    </ul>
+  
+  {% endif %}
+
+  <!-- New Sections -->
+  <section class="repeat-reading-sections">
+    <div class="section-item">
+      <h2>What I Have on Repeat</h2>
+      <div class="spotify-embed">
+        <!-- Your Spotify Embed Code -->
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1x8uXIdl9jsARyEt5KdD8N?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+    </div>
+    
+    <div class="section-item">
+      <h2>What I'm Reading Currently</h2>
+      <p>
+        <!-- Replace the href attribute with the link to the book -->
+        I'm currently reading <a href="https://www.goodreads.com/book/show/43615.The_Gunslinger" target="_blank">The Gunslinger by Stephen King</a>.
+      </p>
+    </div>
+  </section>
+  <script>
+document.addEventListener('mousemove', function(e) {
+  const title = document.querySelector('.site-masthead h1');
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+  const titleRect = title.getBoundingClientRect();
+  const titleX = titleRect.left + titleRect.width / 2;
+  const titleY = titleRect.top + titleRect.height / 2;
+
+  // Define the radius of the area around the title where movement should be applied
+  const radius = 300; // Adjust as needed
+
+  const distanceX = mouseX - titleX;
+  const distanceY = mouseY - titleY;
+  const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+  if (distance < radius) {
+    const deltaX = (distanceX / radius) * 15; // Adjust divisor for sensitivity
+    const deltaY = (distanceY / radius) * 15; // Adjust divisor for sensitivity
+
+    title.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+  } else {
+    // Reset the position if the cursor is outside the radius
+    title.style.transform = `translate(0, 0)`;
+  }
+});
+
+document.addEventListener('mousemove', function(e) {
+  const title = document.querySelector('.site-masthead h1');
+  const penImage = document.querySelector('.pen-image');
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+  const titleRect = title.getBoundingClientRect();
+  const titleX = titleRect.left + titleRect.width / 2;
+  const titleY = titleRect.top + titleRect.height / 2;
+
+  const radius = 500; // Same radius for the pen and title
+  const distanceX = mouseX - titleX;
+  const distanceY = mouseY - titleY;
+  const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+  if (distance < radius) {
+    const deltaX = (distanceX / radius) * 10; // Adjust sensitivity
+    const deltaY = (distanceY / radius) * 10; // Adjust sensitivity
+
+    title.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    penImage.style.transform = `translate(${deltaX}px, ${deltaY + 30}px)`; // Adjust to sync with title
+  } else {
+    title.style.transform = `translate(0, 0)`;
+    penImage.style.transform = `translate(0, 30%) rotate(-15deg)`; // Reset to original position
+  }
+});
+
+window.addEventListener('scroll', function() {
+  const scrollY = window.scrollY;
+  const penImage = document.querySelector('.pen-image');
+  
+  // Make the pen move upwards as you scroll down
+  penImage.style.transform = `translateY(${30 - scrollY * 0.2}%) rotate(0deg)`; // Adjust parallax sensitivity and direction
+});
+
+  </script>
+</main>
