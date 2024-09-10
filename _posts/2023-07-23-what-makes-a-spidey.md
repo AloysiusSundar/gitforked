@@ -4,9 +4,10 @@ author: Joy Aloysius
 category: opinion
 layout: post
 ---
-![Alt text]({{ site.baseurl }}/assets/images/image.png)
 
 Across The Spider-Verse is the sequel to a film that not only changed the landscape of the animation medium as a whole but one that also presented a heartfelt narrative about one's identity, choices and responsibility and just as when the rest of the industry was catching up to the standard that Into The Spider-Verse set, Across The Spider-Verse pushes the standard again. They set the bar. They raised it. All in the shape of a true to the soul Spidey shaped story that this time, asks the question of what it takes to be Spider-Man and what makes Spider-Man, Spider-Man? 
+
+![Alt text]({{ site.baseurl }}/assets/images/image.png)
 
 \
 This is not a review of the film but rather my vaguely gathered thoughts on certain themes that the films takes on and the notions that it challenges and how it confronts one of the uglier sides of the fandom. 

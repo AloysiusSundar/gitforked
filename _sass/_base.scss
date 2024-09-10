@@ -310,3 +310,79 @@ figcaption {
     transform: translateY(20%) rotate(-15deg); /* Tilt the pen and control the vertical overlap */
   }
 }
+
+.project-card {
+  background: white;
+  margin: 2em auto;
+  max-width: 60rem;
+  padding: 2em 1em;
+  box-shadow: 12px 18px 24px rgba(darken($brand-color, 50%), .1);
+  border-radius: 8px; /* Optional: Add rounded corners */
+  position: relative; /* Ensure the pseudo-element is positioned correctly */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Optional: Add smooth transitions */
+}
+
+.project-divider {
+  width: 80%; /* Adjust as needed */
+  height: 24px; /* Adjust height to fit your SVG */
+  background: url('#{$asset_url}/images/divider.svg') no-repeat center center; /* Use the SVG as a background image */
+  background-size: contain; /* Ensure the SVG scales correctly */
+  margin: 0.5em auto; /* Reduced space above and below the divider */
+}
+
+.project-card:hover {
+  transform: scale(1.02); /* Optional: Slightly enlarge the card on hover */
+  box-shadow: 12px 18px 30px rgba(darken($brand-color, 50%), .2); /* Optional: Enhanced shadow on hover */
+}
+
+.project-card > * {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 36rem;
+  padding: 0 1em;
+}
+
+.project-card > h1 {
+  font-size: 2em;
+  max-width: 48rem;
+  padding: 1em 1em 0.5em; /* Reduced space below the heading */
+  text-align: center;
+}
+
+.project-card p {
+  text-align: justify;
+  text-indent: 1.5em;
+  text-justify: inter-word;
+  margin-top: 2em; /* Increased space above the description */
+}
+
+.project-card p:first-of-type,
+.project-card h2 + p {
+  text-indent: 0;
+}
+
+.project-card a:hover {
+  background: $highlight;
+}
+
+.project-card dl,
+.project-card ul,
+.project-card ol {
+  margin: 1.5em;
+}
+
+.project-card li {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.project-card-content:first-child {
+  margin-top: 4em;
+}
+
+.project-card-meta {
+  margin-bottom: 2em;
+  margin-top: 2em;
+  text-align: right;
+}
+

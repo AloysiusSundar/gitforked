@@ -1,0 +1,26 @@
+---
+layout: default
+title: Projects
+---
+{% if site.data.menu %}
+  {% include menu.html %}
+{% else %}
+  {% include back-link.html %}
+{% endif %}
+
+<main class="projects" id="main" role="main" aria-label="Projects">
+
+  <div class="project-cards">
+    {% for project in site.projects %}
+      <article class="project-card" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="200">
+        <h1>{{ project.title }}</h1>
+        <div class="project-divider"></div> <!-- Divider element -->
+        <p>{{ project.description }}</p>
+        <div class="project-card-meta">
+          <a href="https://github.com/AloysiusSundar" class="read-more">View on Github</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+
+</main>
