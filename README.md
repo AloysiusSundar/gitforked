@@ -1,2 +1,2 @@
 Inspired by Hitchens. 
-personal blog to yap and more.
+Personal blog to yap and more.

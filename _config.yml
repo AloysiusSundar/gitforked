@@ -16,7 +16,7 @@
 title: git forked 
 email: aloysiusdhindukalan@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  a place for my internal musings and quirky monologues; nonsense and sense, often in equal measure.
+  nonsense and sense, often in equal measure.
 baseurl: "/gitforked" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 icon: /assets/images/icon-512.png

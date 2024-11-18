@@ -21,7 +21,7 @@
   </head>
   <script src="https://cdn.jsdelivr.net/npm/aos@next/dist/aos.js"></script>
   <body>
-
+    
     {% if page.layout == 'home' %}
       <a href="#main" class="skip-navigation">
         Skip to list of posts
@@ -76,5 +76,13 @@
     }
   });  
     </script>
+
+<script>
+  const toggleButton = document.getElementById('dark-mode-toggle');
+  toggleButton.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+  });
+</script>
+
   </body>
 </html>
