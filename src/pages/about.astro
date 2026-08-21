@@ -1,0 +1,174 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="ROOT_DIRECTORY // GITFORKED" description="About Joy Aloysius S (Software Engineer & Systems Architect) and GitForked.">
+  <div class="py-12 px-8 md:px-24">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12 border-b border-outline-variant/15 pb-8">
+        <div>
+          <div class="font-label text-xs text-secondary uppercase tracking-widest mb-2 flex items-center gap-2 font-bold">
+            <span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+            <span>[ IDENTITY_NODE // ROOT_DIRECTORY ]</span>
+          </div>
+          <h1 class="font-headline text-4xl md:text-5xl font-extrabold uppercase text-on-background tracking-tighter flex items-center gap-3">
+            <span class="text-secondary">~/</span> ROOT_DIRECTORY
+          </h1>
+        </div>
+
+        <div class="font-label text-xs text-on-surface-variant ghost-border px-4 py-2 bg-surface-container-lowest font-bold">
+          OPERATOR // <span class="text-primary-container">JOY ALOYSIUS S</span>
+        </div>
+      </div>
+
+      <!-- Main Profile Grid -->
+      <div class="flex flex-col md:flex-row gap-16 mt-6 md:items-center">
+        <!-- Photo/Avatar Area -->
+        <div class="w-full md:w-1/3 flex flex-col items-center justify-center self-center gap-4">
+          <div class="aspect-square w-full max-w-[320px] bg-surface border border-outline-variant/30 relative overflow-hidden group p-2 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+            <div class="absolute top-4 left-4 font-label text-[10px] text-primary-container bg-surface/90 px-2 py-0.5 z-10 font-bold border border-primary-container/30">
+              HelloThere.png
+            </div>
+            <img 
+              src={`${base}/images/777413566_2291740011364540_5554255872499474372_n.png`} 
+              alt="Joy Aloysius S"
+              class="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-500 rounded-sm"
+            />
+            <div class="absolute bottom-4 right-4 flex gap-2 z-10">
+              <div class="w-2.5 h-2.5 bg-primary-container animate-pulse"></div>
+              <div class="w-2.5 h-2.5 bg-surface-variant"></div>
+            </div>
+          </div>
+          
+          <!-- Identity Info & Contact Links Under Image -->
+          <div class="w-full max-w-[320px] font-label text-xs text-on-surface-variant flex flex-col gap-2 uppercase tracking-wider border-t border-b border-outline-variant/20 py-4 font-bold">
+            <div class="flex justify-between items-center text-primary font-bold text-sm">
+              <span>JOY ALOYSIUS S</span>
+              <span class="text-xs text-primary-container">[ SE ]</span>
+            </div>
+            <div class="text-secondary font-mono text-[11px]">SOFTWARE ENGINEER</div>
+            <div class="text-on-surface-variant/80 text-[10px] mb-1">B.TECH CSE // VIT VELLORE</div>
+
+            <!-- Contact Links -->
+            <div class="border-t border-outline-variant/15 pt-3 flex flex-col gap-2 font-mono text-xs">
+              <a 
+                href="mailto:aloysiusdhindukalan@gmail.com" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">EMAIL</span>
+                <span class="group-hover:underline text-[11px] lowercase">aloysiusdhindukalan@gmail.com</span>
+              </a>
+              <a 
+                href="https://x.com/aloysiusbarb" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">TWITTER</span>
+                <span class="group-hover:underline text-[11px]">@aloysiusbarb ↗</span>
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/joyaloysius2001/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">LINKEDIN</span>
+                <span class="group-hover:underline text-[11px]">in/joyaloysius2001 ↗</span>
+              </a>
+              <a 
+                href="https://github.com/AloysiusSundar" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">GITHUB</span>
+                <span class="group-hover:underline text-[11px]">@AloysiusSundar ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- JSON Profile Data (Focus Areas, Tech Stack & Certifications) -->
+        <div class="w-full md:w-2/3">
+          <div class="bg-surface p-6 sm:p-8 ghost-border font-label text-xs sm:text-sm text-on-surface-variant crt-glow overflow-hidden">
+            <pre class="leading-relaxed whitespace-pre-wrap break-words"><span class="text-secondary">&#123;</span>
+    <span class="text-primary-container">"focus_areas"</span>: <span class="text-secondary">[</span>
+        <span class="text-on-background">"Retrieval-Augmented Generation (RAG & GraphRAG)"</span>,
+        <span class="text-on-background">"Agentic AI Systems & Model Context Protocol (MCP)"</span>,
+        <span class="text-on-background">"LLM Fine-Tuning & Inference Optimization"</span>,
+        <span class="text-on-background">"Distributed Microservices & High-Scale Systems"</span>,
+        <span class="text-on-background">"Real-Time Telemetry & WebRTC Pipelines"</span>
+    <span class="text-secondary">]</span>,
+    <span class="text-primary-container">"tech_stack"</span>: <span class="text-secondary">&#123;</span>
+        <span class="text-primary-container">"languages_and_db"</span>: <span class="text-secondary">[</span>
+            <span class="text-on-background">"Python"</span>, <span class="text-on-background">"SQL"</span>, <span class="text-on-background">"PostgreSQL/Supabase"</span>, <span class="text-on-background">"Redis"</span>,
+            <span class="text-on-background">"Pinecone"</span>, <span class="text-on-background">"ChromaDB"</span>, <span class="text-on-background">"SQLModel"</span>
+        <span class="text-secondary">]</span>,
+        <span class="text-primary-container">"ai_and_ml"</span>: <span class="text-secondary">[</span>
+            <span class="text-on-background">"LLMs & Transformers"</span>, <span class="text-on-background">"Agentic Workflows"</span>, <span class="text-on-background">"GraphRAG"</span>,
+            <span class="text-on-background">"MCP Protocol"</span>, <span class="text-on-background">"LangGraph"</span>, <span class="text-on-background">"LangChain"</span>, <span class="text-on-background">"LiteLLM"</span>
+        <span class="text-secondary">]</span>,
+        <span class="text-primary-container">"backend_and_infra"</span>: <span class="text-secondary">[</span>
+            <span class="text-on-background">"FastAPI"</span>, <span class="text-on-background">"Docker"</span>, <span class="text-on-background">"WebRTC"</span>, <span class="text-on-background">"WebSockets"</span>,
+            <span class="text-on-background">"OpenTelemetry"</span>, <span class="text-on-background">"Prometheus"</span>, <span class="text-on-background">"Grafana"</span>, <span class="text-on-background">"RabbitMQ"</span>
+        <span class="text-secondary">]</span>
+    <span class="text-secondary">&#125;</span>,
+    <span class="text-primary-container">"certifications"</span>: <span class="text-secondary">[</span>
+        <span class="text-on-background">"Microsoft Certified: Security, Compliance, & Identity (SC-900)"</span>
+    <span class="text-secondary">]</span>
+<span class="text-secondary">&#125;</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Narrative Section: About Myself & GitForked -->
+      <div class="mt-16 pt-12 border-t border-outline-variant/15 grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- About Myself -->
+        <div class="bg-surface ghost-border p-8 shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex flex-col justify-between">
+          <div>
+            <div class="font-mono text-xs text-primary-container uppercase font-bold tracking-widest mb-3 flex items-center gap-2">
+              <span class="w-1.5 h-1.5 bg-primary-container rounded-full animate-pulse"></span>
+              <span>[ OPERATOR // NARRATIVE ]</span>
+            </div>
+            <h2 class="font-headline text-2xl font-bold uppercase text-on-background tracking-tight mb-4">
+              About Myself
+            </h2>
+            <p class="font-body text-sm sm:text-base text-on-surface-variant leading-relaxed mb-4">
+              I’m Joy Aloysius S (also known online as Aloy / Vulture), a Software Engineer and CSE graduate from VIT Vellore. I specialize in engineering intelligent AI agents, retrieval systems (RAG & GraphRAG), and scalable backend infrastructure using Python, FastAPI, and Model Context Protocol (MCP).
+            </p>
+            <p class="font-body text-sm text-on-surface-variant/80 leading-relaxed">
+              Beyond production code, I’m deeply fascinated by narrative design, philosophy, film critique, and music curation—spending late nights analyzing storytelling mechanics across anime, cinema, and literature.
+            </p>
+          </div>
+        </div>
+
+        <!-- About GitForked -->
+        <div class="bg-surface ghost-border p-8 shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex flex-col justify-between">
+          <div>
+            <div class="font-mono text-xs text-secondary uppercase font-bold tracking-widest mb-3 flex items-center gap-2">
+              <span class="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span>
+              <span>[ ARCHITECTURE // SYSTEM_ORIGIN ]</span>
+            </div>
+            <h2 class="font-headline text-2xl font-bold uppercase text-on-background tracking-tight mb-4">
+              About GitForked
+            </h2>
+            <p class="font-body text-sm sm:text-base text-on-surface-variant leading-relaxed mb-4">
+              <strong class="text-primary-container font-bold">GITFORKED</strong> is my digital workshop, personal archive, and live telemetry hub. Built with Astro, Tailwind, and custom terminal aesthetics, it serves as a central junction for my open-source code repositories, technical experiments, and long-form thought streams.
+            </p>
+            <p class="font-body text-sm text-on-surface-variant/80 leading-relaxed">
+              The name reflects constant iteration—forking ideas, refining architectures, and logging honest critiques of film, television, literature, and software design into a singular stream.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

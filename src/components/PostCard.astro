@@ -1,0 +1,59 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  date: Date | string;
+  slug: string;
+  description?: string;
+  tags?: string[];
+}
+
+const { title, category, date, slug, description, tags = [] } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric'
+});
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
+---
+
+<a 
+  href={`${base}/posts/${slug}`}
+  class="zen-snap-card p-6 flex flex-col justify-between h-[280px] group relative overflow-hidden"
+>
+  <div>
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <span class="font-mono text-[10px] text-[var(--color-planner-green)] font-bold tracking-widest uppercase">
+        [ ESSAY // {category} ]
+      </span>
+      <span class="font-mono text-[10px] text-[var(--color-zen-dark)]">
+        {formattedDate}
+      </span>
+    </div>
+
+    <h3 class="font-headline text-lg font-bold text-[var(--color-zen-light)] mb-3 uppercase leading-snug group-hover:text-[var(--color-zen-neon)] transition-colors">
+      {title}
+    </h3>
+
+    {description && (
+      <p class="font-body text-sm text-[var(--color-zen-muted)] line-clamp-3 leading-relaxed">
+        {description}
+      </p>
+    )}
+  </div>
+
+  <div class="flex items-center justify-between border-t border-[rgba(59,75,55,0.3)] pt-3 mt-4">
+    <div class="flex items-center gap-1.5 flex-wrap">
+      {tags.slice(0, 3).map((tag) => (
+        <span class="font-mono text-[9px] uppercase text-[var(--color-zen-muted)] ghost-border px-2 py-0.5">
+          #{tag}
+        </span>
+      ))}
+    </div>
+    <span class="font-mono text-[10px] text-[var(--color-zen-neon)] opacity-0 group-hover:opacity-100 transition-opacity duration-0">
+      READ_ESSAY &gt;
+    </span>
+  </div>
+</a>

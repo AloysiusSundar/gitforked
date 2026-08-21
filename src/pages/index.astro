@@ -1,0 +1,480 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LogCard from '../components/LogCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import AppleMusicWidget from '../components/AppleMusicWidget.astro';
+import ReadingWidget from '../components/ReadingWidget.astro';
+import { getCollection } from 'astro:content';
+
+const reviews = await getCollection('reviews');
+const posts = await getCollection('posts');
+const projects = await getCollection('projects');
+
+const thoughtStream = [
+  ...reviews.map(r => ({
+    collectionType: 'reviews' as const,
+    type: (r.data.type || 'REVIEW').toUpperCase(),
+    order: r.data.order,
+    title: r.data.title,
+    category: r.data.category,
+    rating: r.data.rating,
+    date: r.data.date,
+    slug: r.slug,
+    description: r.data.description,
+    status: r.data.status,
+  })),
+  ...posts.map(p => ({
+    collectionType: 'posts' as const,
+    type: (p.data.type || 'ESSAY').toUpperCase(),
+    order: p.data.order,
+    title: p.data.title,
+    category: p.data.category,
+    rating: undefined,
+    date: p.data.date,
+    slug: p.slug,
+    description: p.data.description,
+    status: 'LOGGED',
+  })),
+].sort((a, b) => {
+  if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+  if (a.order !== undefined) return -1;
+  if (b.order !== undefined) return 1;
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+});
+
+const techStack = [
+  'Python',
+  'FastAPI',
+  'LLMs & Transformers',
+  'PyTorch',
+  'GraphRAG',
+  'Model Context Protocol (MCP)',
+  'Agentic Workflows',
+  'Vector DBs (Pinecone/Chroma)',
+  'PostgreSQL / Supabase',
+  'Redis',
+  'Docker',
+  'OpenTelemetry',
+  'WebRTC',
+  'TypeScript',
+  'Astro'
+];
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="GITFORKED — Joy Aloysius S | Portfolio & Thought Stream">
+
+  <!-- SECTION 01: Full-Screen Hero Viewport -->
+  <section class="min-h-[calc(100vh-77px)] flex flex-col justify-between px-8 md:px-24 py-12 relative overflow-hidden ghost-border-b bg-[radial-gradient(circle_at_70%_45%,_rgba(0,255,65,0.07)_0%,_transparent_65%)]">
+    <div></div> <!-- Top spacer -->
+
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10 my-auto">
+      
+      <!-- Left Hero Content -->
+      <div class="lg:col-span-7">
+        <div class="font-label text-secondary mb-4 text-xs md:text-sm tracking-widest uppercase font-bold flex items-center gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+          <span>[ 01 // OVERVIEW ] JOY ALOYSIUS S // SOFTWARE ENGINEER & WRITER</span>
+        </div>
+
+        <h1 class="font-headline text-6xl md:text-8xl font-extrabold tracking-tighter text-on-background mb-4 leading-none uppercase">
+          <span class="text-primary-container">&gt;</span> GITFORKED<span class="blinking-cursor text-primary-container">_</span>
+        </h1>
+
+        <p class="font-headline text-xl md:text-2xl text-primary font-bold max-w-2xl leading-relaxed mb-3 uppercase tracking-tight">
+          Building Intelligent Systems. Writing Whatever.
+        </p>
+
+        <blockquote class="font-label text-[11px] md:text-xs text-secondary border-l-2 border-secondary pl-3.5 py-1 mb-6 uppercase tracking-wider bg-surface/50 leading-relaxed">
+          "Our lives slip away, moment by moment, lost in the vast terrible in between. But there is still time to seize that one last fragile moment."
+          <span class="text-on-surface-variant/70 font-normal tracking-normal lowercase ml-1 block md:inline mt-1 md:mt-0">// j. michael straczynski</span>
+        </blockquote>
+
+        <div class="font-body text-base md:text-lg text-on-surface-variant max-w-2xl leading-relaxed mb-10 space-y-4 font-normal">
+          <p>
+            I’m a software engineer interested in building intelligent systems and making complicated things work at scale. I like digging into problems where the interesting part starts after the obvious solution.
+          </p>
+          <p>
+            Outside of engineering, I write about the occasional thought I’ve been unable to leave alone.
+          </p>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex gap-4 flex-wrap font-label">
+          <a 
+            href={`${base}/projects`}
+            class="bg-primary-container text-on-primary uppercase tracking-widest text-sm px-8 py-4 hover:bg-primary transition-colors duration-200 flex items-center gap-2 font-bold shadow-[0_0_25px_rgba(0,255,65,0.25)]"
+          >
+            <span>EXPLORE_PROJECTS</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+
+          <a 
+            href={`${base}/posts`}
+            class="bg-transparent border border-outline-variant/40 text-primary uppercase tracking-widest text-sm px-8 py-4 hover:border-primary-container transition-colors duration-200"
+          >
+            &gt; READ_THOUGHT_STREAM
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Feature Card (Clean At-A-Glance Profile with GitHub Badge) -->
+      <div class="lg:col-span-5">
+        <div class="bg-surface-container-lowest ghost-border p-8 font-label text-xs crt-glow relative rounded-sm shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-outline-variant/30">
+          
+          <!-- Card Header -->
+          <div class="flex items-center justify-between border-b border-outline-variant/20 pb-4 mb-6">
+            <div class="flex items-center gap-3">
+              <span class="w-3 h-3 rounded-full bg-primary-container inline-block animate-ping"></span>
+              <span class="text-primary font-bold tracking-widest uppercase text-sm">AT_A_GLANCE</span>
+            </div>
+            <a 
+              href="https://github.com/AloysiusSundar" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="text-primary-container font-bold text-[10px] bg-surface px-2.5 py-1 border border-outline-variant/30 hover:border-primary-container transition-colors flex items-center gap-1"
+            >
+              <span>GITHUB // @AloysiusSundar</span>
+              <span>↗</span>
+            </a>
+          </div>
+
+          <!-- Highlight Rows -->
+          <div class="space-y-4 text-xs font-mono">
+            <div class="flex justify-between items-center border-b border-outline-variant/15 pb-2">
+              <span class="text-on-surface-variant uppercase">CURRENT ROLE</span>
+              <span class="text-primary font-bold">Software Engineer @ Cogniwide UK</span>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-outline-variant/15 pb-2">
+              <span class="text-on-surface-variant uppercase">EDUCATION</span>
+              <span class="text-on-background">B.Tech CSE @ VIT Vellore</span>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-outline-variant/15 pb-2">
+              <span class="text-on-surface-variant uppercase">FEATURED ESSAY</span>
+              <a href={`${base}/posts/philosophy-of-being-good`} class="text-secondary hover:underline font-bold">Philosophy of Being Good ↗</a>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-outline-variant/15 pb-2">
+              <span class="text-on-surface-variant uppercase">FEATURED PROJECT</span>
+              <a href="https://yathirai-eight.vercel.app" target="_blank" class="text-primary-container hover:underline font-bold">Yathir.ai ↗</a>
+            </div>
+          </div>
+
+          <!-- Technical Stack Badges -->
+          <div class="mt-6 pt-4 border-t border-outline-variant/20">
+            <div class="text-[10px] text-on-surface-variant uppercase mb-3 tracking-widest font-bold">
+              TECHNICAL STACK & INFRASTRUCTURE
+            </div>
+            <div class="flex flex-wrap gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+              {techStack.map(skill => (
+                <span class="text-[10px] uppercase text-primary bg-surface border border-outline-variant/30 px-2.5 py-1 font-mono hover:border-primary-container transition-colors">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Scroll Indicator & Binary Grid Overlay -->
+    <div class="max-w-7xl mx-auto w-full flex justify-between items-end z-10 pt-6">
+      <a 
+        href="#logs" 
+        id="scroll-to-logs-btn"
+        class="font-label text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container flex items-center gap-2 transition-colors cursor-pointer"
+      >
+        <span>[ SCROLL FOR REFLECTIONS, REVIEWS & ANALYSES ]</span>
+        <span class="material-symbols-outlined text-sm animate-bounce">expand_more</span>
+      </a>
+
+      <!-- Binary Grid Element -->
+      <div class="opacity-15 pointer-events-none hidden lg:block select-none">
+        <pre class="font-label text-[10px] leading-none text-primary">
+01000111 01001001 01010100 01000110 01001111 01010010 01001011 01000101 01000100
+01010000 01001111 01010010 01010011 01010100 01000101 01011101 01011111 01001001
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 02: Full-Screen Viewport for Thought Stream Logs & Reviews -->
+  <section class="min-h-[calc(100vh-77px)] flex flex-col justify-between py-16 px-8 md:px-24 bg-surface-container-lowest border-b border-outline-variant/15 relative scroll-mt-[77px]" id="logs">
+    <div class="max-w-6xl mx-auto w-full my-auto">
+      
+      <!-- Section Marker Header -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-12 border-b border-outline-variant/20 pb-6">
+        <div>
+          <div class="font-label text-xs text-secondary uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+            <span>[ 02 // REFLECTIONS, REVIEWS & ANALYSES ]</span>
+          </div>
+          <h2 class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-background flex items-center gap-3 uppercase">
+            <span class="text-secondary">/var/log/</span> THOUGHT_STREAM.log
+          </h2>
+        </div>
+        
+        <a href={`${base}/posts`} class="font-label text-xs text-primary-container hover:underline tracking-widest uppercase font-bold bg-surface px-4 py-2 ghost-border">
+          VIEW_ALL_LOGS ({thoughtStream.length}) &gt;
+        </a>
+      </div>
+
+      <!-- Bento Cards Grid matching Review Card specs -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {thoughtStream.slice(0, 6).map(item => (
+          <LogCard 
+            type={item.type}
+            collectionType={item.collectionType}
+            title={item.title}
+            category={item.category}
+            rating={item.rating}
+            date={item.date}
+            slug={item.slug}
+            description={item.description}
+            status={item.status}
+          />
+        ))}
+      </div>
+    </div>
+
+    <!-- Section 02 Bottom Scroll Cue -->
+    <div class="max-w-6xl mx-auto w-full flex justify-between items-center z-10 pt-6 border-t border-outline-variant/10">
+      <a 
+        href="#repos" 
+        id="scroll-to-repos-btn"
+        class="font-label text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container flex items-center gap-2 transition-colors cursor-pointer"
+      >
+        <span>[ CONTINUE TO ACTIVE REPOSITORIES ]</span>
+        <span class="material-symbols-outlined text-sm animate-bounce">expand_more</span>
+      </a>
+      <span class="font-label text-[10px] text-outline-variant uppercase">// END_OF_THOUGHT_STREAM_PREVIEW</span>
+    </div>
+  </section>
+
+  <!-- SECTION 03: Full-Screen Viewport for Active Repositories / Projects -->
+  {projects.length > 0 && (
+    <section class="min-h-[calc(100vh-77px)] flex flex-col justify-between py-16 px-8 md:px-24 border-b border-outline-variant/15 relative scroll-mt-[77px]" id="repos">
+      <div class="max-w-6xl mx-auto w-full my-auto">
+        
+        <!-- Section Marker Header -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-12 border-b border-outline-variant/20 pb-6">
+          <div>
+            <div class="font-label text-xs text-secondary uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+              <span>[ 03 // PROJECTS & CODE ]</span>
+            </div>
+            <h2 class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-background flex items-center gap-3 uppercase">
+              <span class="text-primary-container">&gt;</span> ACTIVE_REPOSITORIES
+            </h2>
+          </div>
+
+          <a href={`${base}/projects`} class="font-label text-xs text-primary-container hover:underline tracking-widest uppercase font-bold bg-surface-container-lowest px-4 py-2 ghost-border">
+            ALL_MODULES &gt;
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {projects.map(pj => (
+            <ProjectCard 
+              title={pj.data.title}
+              description={pj.data.description}
+              slug={pj.slug}
+              github={pj.data.github}
+              url={pj.data.url}
+              tags={pj.data.tags}
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Section 03 Bottom Scroll Cue -->
+      <div class="max-w-6xl mx-auto w-full flex justify-between items-center z-10 pt-6 border-t border-outline-variant/10">
+        <a 
+          href="#telemetry" 
+          id="scroll-to-telemetry-btn"
+          class="font-label text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container flex items-center gap-2 transition-colors cursor-pointer"
+        >
+          <span>[ CONTINUE TO LIVE TELEMETRY ]</span>
+          <span class="material-symbols-outlined text-sm animate-bounce">expand_more</span>
+        </a>
+        <span class="font-label text-[10px] text-outline-variant uppercase">// END_OF_REPOSITORIES_PREVIEW</span>
+      </div>
+    </section>
+  )}
+
+  <!-- SECTION 04: Full-Screen Viewport for Current Rhythms (Audio & Reading) -->
+  <section class="min-h-[calc(100vh-77px)] flex flex-col justify-between py-16 px-8 md:px-24 border-b border-outline-variant/15 relative scroll-mt-[77px]" id="telemetry">
+    <div class="max-w-6xl mx-auto w-full my-auto">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-12 border-b border-outline-variant/20 pb-6">
+        <div>
+          <div class="font-label text-xs text-secondary uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+            <span>[ 04 // CURRENT_RHYTHMS ]</span>
+          </div>
+          <h2 class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-background flex items-center gap-3 uppercase">
+            <span class="text-primary-container">&gt;</span> AUDIO & READING STATUS
+          </h2>
+        </div>
+
+        <div class="font-label text-xs text-on-surface-variant ghost-border px-4 py-2 bg-surface-container-lowest">
+          STREAM // <span class="text-primary-container font-bold">APPLE MUSIC + STORYGRAPH</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        <AppleMusicWidget />
+        <ReadingWidget />
+      </div>
+    </div>
+
+    <!-- Section 04 Bottom Scroll Cue -->
+    <div class="max-w-6xl mx-auto w-full flex justify-between items-center z-10 pt-6 border-t border-outline-variant/10">
+      <a 
+        href="#about" 
+        id="scroll-to-about-btn"
+        class="font-label text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container flex items-center gap-2 transition-colors cursor-pointer"
+      >
+        <span>[ CONTINUE TO ROOT DIRECTORY ]</span>
+        <span class="material-symbols-outlined text-sm animate-bounce">expand_more</span>
+      </a>
+      <span class="font-label text-[10px] text-outline-variant uppercase">// END_OF_RHYTHMS_STREAM</span>
+    </div>
+  </section>
+
+  <!-- SECTION 05: About Me / Root Directory Section -->
+  <section class="py-24 px-8 md:px-24 bg-surface-container-lowest border-t border-outline-variant/15 scroll-mt-[77px]" id="about">
+    <div class="max-w-6xl mx-auto">
+      <div class="font-label text-xs text-secondary uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+        <span>[ 05 // ABOUT & IDENTITY ]</span>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-16 mt-6 md:items-center">
+        <!-- Photo/Avatar Area -->
+        <div class="w-full md:w-1/3 flex flex-col items-center justify-center self-center gap-4">
+          <div class="aspect-square w-full max-w-[320px] bg-surface border border-outline-variant/30 relative overflow-hidden group p-2 rounded-sm shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+            <div class="absolute top-4 left-4 font-label text-[10px] text-primary-container bg-surface/90 px-2 py-0.5 z-10 font-bold border border-primary-container/30">
+              HelloThere.png
+            </div>
+            <img 
+              src={`${base}/images/777413566_2291740011364540_5554255872499474372_n.png`} 
+              alt="Joy Aloysius S"
+              class="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-500 rounded-sm"
+            />
+            <div class="absolute bottom-4 right-4 flex gap-2 z-10">
+              <div class="w-2.5 h-2.5 bg-primary-container animate-pulse"></div>
+              <div class="w-2.5 h-2.5 bg-surface-variant"></div>
+            </div>
+          </div>
+          
+          <!-- Identity Info & Contact Links Under Image -->
+          <div class="w-full max-w-[320px] font-label text-xs text-on-surface-variant flex flex-col gap-2 uppercase tracking-wider border-t border-b border-outline-variant/20 py-4 font-bold">
+            <div class="flex justify-between items-center text-primary font-bold text-sm">
+              <span>JOY ALOYSIUS S</span>
+              <span class="text-xs text-primary-container">[ SE ]</span>
+            </div>
+            <div class="text-secondary font-mono text-[11px]">SOFTWARE ENGINEER</div>
+            <div class="text-on-surface-variant/80 text-[10px] mb-1">B.TECH CSE // VIT VELLORE</div>
+
+            <!-- Contact Links -->
+            <div class="border-t border-outline-variant/15 pt-3 flex flex-col gap-2 font-mono text-xs">
+              <a 
+                href="mailto:aloysiusdhindukalan@gmail.com" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">EMAIL</span>
+                <span class="group-hover:underline text-[11px] lowercase">aloysiusdhindukalan@gmail.com</span>
+              </a>
+              <a 
+                href="https://x.com/aloysiusbarb" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">TWITTER</span>
+                <span class="group-hover:underline text-[11px]">@aloysiusbarb ↗</span>
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/joyaloysius2001/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">LINKEDIN</span>
+                <span class="group-hover:underline text-[11px]">in/joyaloysius2001 ↗</span>
+              </a>
+              <a 
+                href="https://github.com/AloysiusSundar" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center justify-between text-on-surface-variant hover:text-primary-container transition-colors group"
+              >
+                <span class="text-[10px] text-outline-variant">GITHUB</span>
+                <span class="group-hover:underline text-[11px]">@AloysiusSundar ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- JSON Profile Data (Focus Areas, Tech Stack & Certifications) -->
+        <div class="w-full md:w-2/3">
+          <div class="bg-surface p-6 sm:p-8 ghost-border font-label text-xs sm:text-sm text-on-surface-variant crt-glow overflow-hidden">
+            <pre class="leading-relaxed whitespace-pre-wrap break-words"><span class="text-secondary">&#123;</span>
+    <span class="text-primary-container">"focus_areas"</span>: <span class="text-secondary">[</span>
+        <span class="text-on-background">"Retrieval-Augmented Generation (RAG & GraphRAG)"</span>,
+        <span class="text-on-background">"Agentic AI Systems & Model Context Protocol (MCP)"</span>,
+        <span class="text-on-background">"LLM Fine-Tuning & Inference Optimization"</span>,
+        <span class="text-on-background">"Distributed Microservices & High-Scale Systems"</span>,
+        <span class="text-on-background">"Real-Time Telemetry & WebRTC Pipelines"</span>
+    <span class="text-secondary">]</span>,
+    <span class="text-primary-container">"tech_stack"</span>: <span class="text-secondary">&#123;</span>
+        <span class="text-primary-container">"languages_and_db"</span>: <span class="text-secondary">[</span>
+            <span class="text-on-background">"Python"</span>, <span class="text-on-background">"SQL"</span>, <span class="text-on-background">"PostgreSQL/Supabase"</span>, <span class="text-on-background">"Redis"</span>,
+            <span class="text-on-background">"Pinecone"</span>, <span class="text-on-background">"ChromaDB"</span>, <span class="text-on-background">"SQLModel"</span>
+        <span class="text-secondary">]</span>,
+        <span class="text-primary-container">"ai_and_ml"</span>: <span class="text-secondary">[</span>
+            <span class="text-on-background">"LLMs & Transformers"</span>, <span class="text-on-background">"Agentic Workflows"</span>, <span class="text-on-background">"GraphRAG"</span>,
+            <span class="text-on-background">"MCP Protocol"</span>, <span class="text-on-background">"LangGraph"</span>, <span class="text-on-background">"LangChain"</span>, <span class="text-on-background">"LiteLLM"</span>
+        <span class="text-secondary">]</span>,
+        <span class="text-primary-container">"backend_and_infra"</span>: <span class="text-secondary">[</span>
+            <span class="text-on-background">"FastAPI"</span>, <span class="text-on-background">"Docker"</span>, <span class="text-on-background">"WebRTC"</span>, <span class="text-on-background">"WebSockets"</span>,
+            <span class="text-on-background">"OpenTelemetry"</span>, <span class="text-on-background">"Prometheus"</span>, <span class="text-on-background">"Grafana"</span>, <span class="text-on-background">"RabbitMQ"</span>
+        <span class="text-secondary">]</span>
+    <span class="text-secondary">&#125;</span>,
+    <span class="text-primary-container">"certifications"</span>: <span class="text-secondary">[</span>
+        <span class="text-on-background">"Microsoft Certified: Security, Compliance, & Identity (SC-900)"</span>
+    <span class="text-secondary">]</span>
+<span class="text-secondary">&#125;</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bindSmoothScroll = (btnId, targetId) => {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.getElementById(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    };
+
+    bindSmoothScroll('scroll-to-logs-btn', 'logs');
+    bindSmoothScroll('scroll-to-repos-btn', 'repos');
+    bindSmoothScroll('scroll-to-telemetry-btn', 'telemetry');
+    bindSmoothScroll('scroll-to-about-btn', 'about');
+  });
+</script>
+</BaseLayout>

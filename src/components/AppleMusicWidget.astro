@@ -1,0 +1,51 @@
+---
+import { CoverflowCarousel } from "./ui/CoverflowCarousel";
+import { getPlaylistSlides } from "../lib/fetchPlaylistTracks";
+
+const { playlistTitle, slides } = await getPlaylistSlides();
+---
+
+<div class="bg-surface-container-lowest ghost-border p-8 hover:bg-surface-container-low transition-colors duration-300 flex flex-col justify-between min-h-[420px] relative">
+  <div>
+    <!-- Top Bar -->
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <span class="font-label text-xs text-secondary font-bold tracking-widest uppercase">
+        [ NOW // ON LOOP ]
+      </span>
+      <span class="font-label text-[10px] uppercase text-on-surface-variant ghost-border px-2 py-0.5">
+        APPLE_MUSIC
+      </span>
+    </div>
+
+    <h3 class="font-headline text-xl font-bold text-on-background mb-4 uppercase">
+      What I'm Listening To Currently
+    </h3>
+
+    <!-- Inner Elevated Container matching ReadingWidget -->
+    <div class="ghost-border p-6 bg-surface mb-4">
+      <div class="font-label text-xs text-primary-container uppercase mb-2">
+        [ PLAYLIST ]
+      </div>
+      <h4 class="font-headline font-bold text-lg text-primary mb-3 truncate">
+        {playlistTitle}
+      </h4>
+
+      <div class="w-full flex-1 flex flex-col items-center justify-center pt-2">
+        <CoverflowCarousel client:visible slides={slides} />
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer matching ReadingWidget -->
+  <div class="border-t border-outline-variant/20 pt-4 mt-auto flex justify-between items-center font-label text-xs">
+    <a 
+      href="https://music.apple.com/us/playlist/walk-to-your-bike-pause-sigh-cut-to-ride-type-shit/pl.u-76oNkyyFv1dGKqg" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="text-primary-container hover:underline font-bold flex items-center gap-1"
+    >
+      VIEW_ON_APPLE_MUSIC ↗
+    </a>
+    <span class="text-on-surface-variant">// {slides.length}_TRACKS</span>
+  </div>
+</div>

@@ -4,3 +4,21 @@
 .jekyll-cache
 _site
 Gemfile.lock
+
+# Node / Dependencies
+node_modules/
+
+# Astro & Build artifacts
+.astro/
+dist/
+
+# Environment & OS
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+
+# Design Drafts & Prompts
+GOOGLE_STITCH/
+

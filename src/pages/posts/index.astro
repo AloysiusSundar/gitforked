@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LogCard from '../../components/LogCard.astro';
+import { getCollection } from 'astro:content';
+
+const reviews = await getCollection('reviews');
+const posts = await getCollection('posts');
+
+const thoughtStream = [
+  ...reviews.map(r => ({
+    collectionType: 'reviews' as const,
+    type: (r.data.type || 'REVIEW').toUpperCase(),
+    filterGroup: 'REVIEW' as const,
+    order: r.data.order,
+    title: r.data.title,
+    category: r.data.category,
+    rating: r.data.rating,
+    date: r.data.date,
+    slug: r.slug,
+    description: r.data.description,
+    status: r.data.status,
+  })),
+  ...posts.map(p => ({
+    collectionType: 'posts' as const,
+    type: (p.data.type || 'ESSAY').toUpperCase(),
+    filterGroup: 'ESSAY' as const,
+    order: p.data.order,
+    title: p.data.title,
+    category: p.data.category,
+    rating: undefined,
+    date: p.data.date,
+    slug: p.slug,
+    description: p.data.description,
+    status: 'LOGGED',
+  })),
+].sort((a, b) => {
+  if (a.order !== undefined && b.order !== undefined) {
+    return a.order - b.order;
+  }
+  if (a.order !== undefined) return -1;
+  if (b.order !== undefined) return 1;
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+});
+---
+
+<BaseLayout title="THOUGHT_STREAM.log // GITFORKED" description="Unified stream of reviews, analyses, reflections, and essays by Joy Aloysius.">
+  <div class="py-12 px-8 md:px-24">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12 border-b border-outline-variant/15 pb-8">
+      <div>
+        <div class="font-label text-xs text-secondary uppercase tracking-widest mb-2">[ LOG_VIEWPORT // UNIFIED ]</div>
+        <h1 class="font-headline text-4xl md:text-5xl font-extrabold uppercase text-on-background tracking-tighter flex items-center gap-3">
+          <span class="text-secondary">/var/log/</span> THOUGHT_STREAM.log
+        </h1>
+      </div>
+
+      <div class="font-label text-xs text-on-surface-variant ghost-border px-4 py-2 bg-surface-container-lowest">
+        TOTAL_ENTRIES // <span class="text-primary-container font-bold">{thoughtStream.length} TRANSMISSIONS</span>
+      </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="flex flex-wrap gap-3 mb-10 font-label text-xs" id="filter-container">
+      <button 
+        data-filter="all" 
+        class="filter-btn bg-primary-container text-on-primary font-bold px-4 py-2 uppercase tracking-widest cursor-pointer transition-colors"
+      >
+        [ ALL ({thoughtStream.length}) ]
+      </button>
+      <button 
+        data-filter="REVIEW" 
+        class="filter-btn bg-surface-container-lowest ghost-border text-on-surface-variant hover:text-primary px-4 py-2 uppercase tracking-widest cursor-pointer transition-colors"
+      >
+        [ REVIEWS & ANALYSES ({reviews.length}) ]
+      </button>
+      <button 
+        data-filter="ESSAY" 
+        class="filter-btn bg-surface-container-lowest ghost-border text-on-surface-variant hover:text-primary px-4 py-2 uppercase tracking-widest cursor-pointer transition-colors"
+      >
+        [ REFLECTIONS & ESSAYS ({posts.length}) ]
+      </button>
+    </div>
+
+    <!-- Bento Grid using LogCard -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="log-grid">
+      {thoughtStream.map(item => (
+        <div class="log-card-item" data-type={item.filterGroup}>
+          <LogCard 
+            type={item.type}
+            collectionType={item.collectionType}
+            title={item.title}
+            category={item.category}
+            rating={item.rating}
+            date={item.date}
+            slug={item.slug}
+            description={item.description}
+            status={item.status}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.log-card-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-primary-container', 'text-on-primary', 'font-bold');
+          b.classList.add('bg-surface-container-lowest', 'ghost-border', 'text-on-surface-variant');
+        });
+
+        btn.classList.remove('bg-surface-container-lowest', 'ghost-border', 'text-on-surface-variant');
+        btn.classList.add('bg-primary-container', 'text-on-primary', 'font-bold');
+
+        items.forEach(item => {
+          const type = item.getAttribute('data-type');
+          if (filter === 'all' || type === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

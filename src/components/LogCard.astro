@@ -1,0 +1,89 @@
+---
+interface Props {
+  type?: string;
+  collectionType?: 'reviews' | 'posts';
+  title: string;
+  category: string;
+  rating?: number;
+  date: Date | string;
+  slug: string;
+  description?: string;
+  status?: string;
+}
+
+const { 
+  type = 'ESSAY',
+  collectionType,
+  title, 
+  category, 
+  rating, 
+  date, 
+  slug, 
+  description, 
+  status = (collectionType === 'reviews' || rating !== undefined) ? 'RECOMMENDED' : 'LOGGED' 
+} = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric'
+});
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
+
+const isReviewCollection = collectionType ? collectionType === 'reviews' : (rating !== undefined);
+const href = isReviewCollection ? `${base}/reviews/${slug}` : `${base}/posts/${slug}`;
+
+const displayType = type.toUpperCase();
+const actionLabel = displayType === 'REVIEW' 
+  ? 'READ_FULL_REVIEW >' 
+  : displayType === 'ANALYSIS' 
+    ? 'READ_FULL_ANALYSIS >' 
+    : 'READ_ENTRY >';
+---
+
+<a 
+  href={href}
+  class="bg-surface-container-lowest ghost-border p-8 hover:bg-surface-container-low hover:-translate-y-1.5 hover:border-primary-container/40 hover:shadow-[0_0_30px_rgba(0,255,65,0.08)] transition-all duration-300 flex flex-col justify-between group h-[320px] relative overflow-hidden"
+>
+  <div>
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <span class="font-label text-xs text-secondary font-bold tracking-widest uppercase">
+        [ {displayType} // {category} ]
+      </span>
+      <span class="font-label text-[10px] uppercase tracking-wider text-on-primary bg-primary-container px-2 py-0.5 font-bold">
+        {status}
+      </span>
+    </div>
+
+    <h3 class="font-headline text-xl font-bold text-on-background mb-3 uppercase leading-tight group-hover:text-primary transition-colors">
+      {title}
+    </h3>
+
+    {description && (
+      <p class="font-body text-sm text-on-surface-variant line-clamp-3 leading-relaxed mb-4">
+        {description}
+      </p>
+    )}
+  </div>
+
+  <div>
+    <div class="flex items-center justify-between border-t border-outline-variant/20 pt-4 mt-auto">
+      {rating !== undefined ? (
+        <div class="flex items-center gap-2">
+          <span class="font-label text-sm text-primary-container font-bold">{'★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating))}</span>
+          <span class="font-label text-xs text-on-background font-bold">({rating}/5)</span>
+        </div>
+      ) : (
+        <span class="font-label text-xs text-secondary font-bold">[ {displayType}_ENTRY ]</span>
+      )}
+      <span class="font-label text-xs text-on-surface-variant uppercase">
+        {formattedDate}
+      </span>
+    </div>
+
+    <div class="text-primary-container font-label text-xs tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1 mt-2">
+      {actionLabel}
+    </div>
+  </div>
+</a>

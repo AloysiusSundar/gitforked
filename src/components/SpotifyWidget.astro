@@ -1,0 +1,42 @@
+---
+interface Props {
+  spotifyUrl?: string;
+}
+
+const { spotifyUrl = "https://open.spotify.com/embed/album/4oL7pMxnb04uuRI7ReXmuh?utm_source=generator" } = Astro.props;
+---
+
+<div class="bg-surface-container-lowest ghost-border p-8 hover:bg-surface-container-low transition-colors duration-300 flex flex-col justify-between h-[420px] relative">
+  <div>
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <span class="font-label text-xs text-primary-container font-bold tracking-widest uppercase">
+        [ NOW // ON REPEAT ]
+      </span>
+      <span class="font-label text-[10px] uppercase text-secondary flex items-center gap-1">
+        <span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+        AUDIO_TELEMETRY
+      </span>
+    </div>
+
+    <h3 class="font-headline text-xl font-bold text-on-background mb-4 uppercase">
+      What I Have On Repeat
+    </h3>
+  </div>
+
+  <div class="w-full flex-1 rounded overflow-hidden ghost-border">
+    <iframe 
+      style="border-radius:8px; border:0;" 
+      src={spotifyUrl} 
+      width="100%" 
+      height="100%" 
+      allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy"
+    ></iframe>
+  </div>
+
+  <div class="mt-4 flex justify-between items-center font-label text-xs text-on-surface-variant uppercase">
+    <span>SPOTIFY_STREAM_NODE</span>
+    <span>STEREO // 320KBPS</span>
+  </div>
+</div>
