@@ -9,9 +9,12 @@ interface Props {
   author?: string;
   tags?: string[];
   description?: string;
+  image?: string;
+  coverImage?: string;
 }
 
-const { title, category, date, author = 'Joy Aloysius', tags = [], description } = Astro.props;
+const { title, category, date, author = 'Joy Aloysius', tags = [], description, image, coverImage } = Astro.props;
+const heroImage = image || coverImage;
 
 const formattedDate = new Date(date).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -20,6 +23,14 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
 });
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
+
+const resolveImagePath = (path?: string) => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (base && path.startsWith(base)) return path;
+  const clean = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${clean}`;
+};
 ---
 
 <BaseLayout title={`${title} // GIT FORKED`} description={description}>
@@ -69,6 +80,16 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL.s
             </>
           )}
         </div>
+
+        {heroImage && (
+          <div class="-mx-4 sm:-mx-10 md:-mx-16 my-8 overflow-hidden rounded-lg ghost-border shadow-[0_20px_50px_rgba(0,0,0,0.9)] bg-surface-container-lowest relative z-10 max-h-[380px] sm:max-h-[440px]">
+            <img 
+              src={resolveImagePath(heroImage)} 
+              alt={title} 
+              class="w-full h-full max-h-[380px] sm:max-h-[440px] object-cover block" 
+            />
+          </div>
+        )}
       </header>
 
       <!-- Markdown Article Body -->

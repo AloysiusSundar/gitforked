@@ -21,6 +21,7 @@ const { Content } = await post.render();
   author={post.data.author}
   tags={post.data.tags}
   description={post.data.description}
+  image={post.data.image || post.data.coverImage}
 >
   <Content />
 </PostLayout>

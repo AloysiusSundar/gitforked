@@ -12,6 +12,8 @@ const postsCollection = defineCollection({
     order: z.number().optional(), // Explicit display order (1, 2, 3...)
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
+    image: z.string().optional(),
+    coverImage: z.string().optional(),
   }),
 });
 

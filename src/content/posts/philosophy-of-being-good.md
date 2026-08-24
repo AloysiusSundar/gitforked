@@ -5,6 +5,7 @@ date: 2025-04-20
 category: "Reflection"
 tags: ["philosophy", "morality", "life"]
 description: "I like having a moral compass. It’s just inconvenient how it often points directly into a storm."
+coverImage: "/gitforked/images/PhilosophyOfGood/hq720.jpg"
 ---
 
 I like having a moral compass. It’s just inconvenient how it often points directly into a storm.

@@ -23,6 +23,14 @@ const formattedDate = new Date(date).toLocaleDateString('en-US', {
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL.slice(0, -1) : import.meta.env.BASE_URL;
 
+const resolveImagePath = (path?: string) => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (base && path.startsWith(base)) return path;
+  const clean = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${clean}`;
+};
+
 const fullStars = Math.floor(rating);
 const starsStr = '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
 ---
@@ -85,8 +93,12 @@ const starsStr = '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
         </div>
 
         {coverImage && (
-          <div class="w-full h-[360px] rounded overflow-hidden ghost-border bg-surface-container-lowest">
-            <img src={coverImage} alt={title} class="w-full h-full object-cover" />
+          <div class="-mx-4 sm:-mx-10 md:-mx-16 my-8 overflow-hidden rounded-lg ghost-border shadow-[0_20px_50px_rgba(0,0,0,0.9)] bg-surface-container-lowest relative z-10 max-h-[380px] sm:max-h-[440px]">
+            <img 
+              src={resolveImagePath(coverImage)} 
+              alt={title} 
+              class="w-full h-full max-h-[380px] sm:max-h-[440px] object-cover block" 
+            />
           </div>
         )}
       </header>
